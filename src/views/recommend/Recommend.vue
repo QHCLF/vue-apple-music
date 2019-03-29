@@ -40,9 +40,9 @@
         <hr>
         <div class="todyAlbum">
             <h3 class="tody">{{tody}}专辑</h3>
-            <swiper :options="swiperOptionA"  style="height:  11.5rem" class="album">
+            <swiper :options="swiperOptionA"  style="height:  11.72rem" class="album">
                 <swiper-slide v-for="album in albums" class="album">
-                    <img :src="album.blurPicUrl" class="topPlay">
+                    <img :src="album.blurPicUrl" class="topPlayAlbum">
                     <span class="albumTitle">{{album.name}}</span>
                 </swiper-slide>
             </swiper>
@@ -181,6 +181,7 @@
         width:100%;
         height:100%;
         overflow:hidden;
+
     }
     .todyAlbum{
         width: 100%;
@@ -189,6 +190,12 @@
 
     .topPlay{
         width: 100%;
+        border-radius: 0.3rem;
+    }
+    .topPlayAlbum{
+        width: 100%;
+        height: 11.72rem;
+        border-radius: 0.3rem;
     }
 .topPlayTitle{
     position: relative;
