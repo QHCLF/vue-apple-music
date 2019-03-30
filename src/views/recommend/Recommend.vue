@@ -1,5 +1,5 @@
 <template>
-    <div class="recommend">
+    <div class="recommend" id="recommend">
         <header>
             <span class="date">{{timeNow}}</span>
             <h1 class="head">为你推荐</h1>
@@ -31,8 +31,11 @@
             <hr>
             <h3 class="tody">{{tody}}歌单</h3>
             <swiper :options="swiperOption"  style="height:  30rem">
-                <swiper-slide v-for="topplay in topPlayList" >
-                    <img :src="topplay.coverImgUrl" class="topPlay">
+                <swiper-slide v-for="topplay in result"
+                              :data = "detailId"
+                              @click.native="toTopDetail(topplay.id)"
+                              >
+                    <img :src="topplay.picUrl" class="topPlay">
                     <span class="topPlayTitle">{{topplay.name}}</span>
                 </swiper-slide>
             </swiper>
@@ -47,7 +50,7 @@
                 </swiper-slide>
             </swiper>
         </div>
-
+        <router-view />
 
     </div>
 </template>
@@ -90,8 +93,9 @@
               },
 
               banners: [],
-              topPlayList: [],
-              albums: []
+              result: [],
+              albums: [],
+              detailId: Number
           }
         },
         created () {
@@ -110,7 +114,7 @@
             _getTopPlayList(){
                 getTopPlayList().then(res =>{
                     if (res.status === ERR_OK) {
-                        this.topPlayList = res.data.playlists
+                        this.result = res.data.result
                     }
                 })
             },
@@ -120,6 +124,12 @@
                         this.albums = res.data.albums
                     }
                 })
+            },
+            toTopDetail(Id) {
+                // 跳转到专辑详情，这里使用编程式路由跳转
+                this.detailId = Id;
+                this.$router.push(`${this.$route.path + '/' + Id}`);
+
             }
 
         },
@@ -215,4 +225,5 @@
         position: relative;
         top: 0.5rem;
     }
+
 </style>

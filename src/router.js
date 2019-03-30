@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import Home from './views/Home.vue'
 import database from './views/databases/Databases.vue'
+import Detaill from './views/detail/Detail.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -27,7 +28,12 @@ export default new Router({
     {
       path: '/recommend',
       name: 'recommend',
-      component: () => import('./views/recommend/Recommend.vue')
+      component: () => import('./views/recommend/Recommend.vue'),
+      children:[{
+          path: ":detailId",
+          name: "detailInfo",
+          component: () => import('./views/detail/Detail.vue')
+      }]
     },
     {
       path: '/browse',

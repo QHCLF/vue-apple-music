@@ -58,13 +58,18 @@
       </router-link>
 
     </div>
-
     <router-view/>
+      <div class="musicPlayer">
+          <MusicPlayer />
+      </div>
+
   </div>
 </template>
 
 <script>
+    import MusicPlayer from '@/views/player/MusicPlayer'
   export default {
+      name: "app",
       data(){
           return{
               tabIdx : 0,
@@ -75,6 +80,9 @@
           changeTab(idx) {
             this.tabIdx = idx
          }
+      },
+      components:{
+          MusicPlayer
       }
   }
 </script>
@@ -127,4 +135,18 @@
   .tab.active i{
       color: indianred !important;
   }
+
+    .musicPlayer{
+        width: 100%;
+        height: 4rem;
+        background-color: whitesmoke;
+        border-top-style: solid;
+        position: fixed;
+        z-index: 10000;
+        bottom: 4.15rem;
+        left: 0;
+    }
+    .musicPlayer i{
+        font-size: 1.5rem;
+    }
 </style>
