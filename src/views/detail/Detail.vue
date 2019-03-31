@@ -7,12 +7,16 @@
             <div class="playname">
                 <span>{{data.name}}</span>
             </div>
+            <div class="description">
+                <span>{{data.description}}</span>
+            </div>
         </header>
         <div class="contain">
             <ol>
-                <li v-for="track in data.tracks">
-                    <div>{{track.name}}</div>
-                    <div>{{track.ar.name}}</div>
+                <li v-for="song in songs">
+                    <img :src="song.al.picUrl">
+                    <div>{{song.name}}</div>
+                    <div>{{song.ar.name}}</div>
                 </li>
             </ol>
         </div>
@@ -21,17 +25,22 @@
 
 <script>
     import {getDetailTopPlayID} from '../../api/topPlaylist.js'
+    import {getDetailSongs} from '../../api/song.js'
     import {ERR_OK} from '../../common/js/config'
     export default {
         data(){
             return{
                 Id: this.$route.params.detailId,
                 data: null,
-                track: String
+                track: String,
+                songs: [],
+                song: null,
+                Ids: []
             }
         },
         created (){
-           this._getDetailTopPlayID()
+                this._getDetailTopPlayID(),
+                this._getDetailSongs()
         },
         methods:{
             _getDetailTopPlayID(){
@@ -41,6 +50,17 @@
                         this.data = res.data.playlist
                     }
                 })
+            },
+            _getDetailSongs(){
+                for(var i = 0; i<this.this.data.trackIds.length; i++){
+                    getDetailSongs(this.data.trackIds[i].id).then(res =>{
+                        if (res.status === ERR_OK) {
+                            this.songs.push(res.data.songs)
+                        }
+                        this.$forceUpdate()
+                    })
+                }
+
             }
         }
 
@@ -77,5 +97,13 @@
     ol{
         margin-top: 15rem;
 
+    }
+    .description{
+        position: relative;
+        top: 14rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        height: 4.8rem;
+        overflow: hidden;
     }
 </style>

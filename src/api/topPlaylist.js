@@ -10,3 +10,8 @@ export function getDetailTopPlayID(Id) {
     const url = HOST + `/playlist/detail?id`+ "="+ Id
     return axios.get(url)
 }
+
+export function getDetailTopSongs(Id) {
+    const url = HOST + `song/detail?ids`+ "="+ Id
+    return axios.get(url)
+}

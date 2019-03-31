@@ -15,9 +15,9 @@
             </swiper>
         </div>
         <div class="recentely">
-            <h3>最近播放</h3>
+            <h3 class="recent">最近播放</h3>
             <a>显示全部</a>
-            <swiper :options="swiperOptionR"  style="height: 11.5rem">
+            <swiper :options="swiperOptionR"  style="height: 10.14rem; border-radius: 0.3rem;">
                 <swiper-slide>Slide 1</swiper-slide>
                 <swiper-slide>Slide 2</swiper-slide>
                 <swiper-slide>Slide 3</swiper-slide>
@@ -30,7 +30,7 @@
         <div class="todyTopPlayList">
             <hr>
             <h3 class="tody">{{tody}}歌单</h3>
-            <swiper :options="swiperOption"  style="height:  30rem">
+            <swiper :options="swiperOption"  style="height:  26rem">
                 <swiper-slide v-for="topplay in result"
                               :data = "detailId"
                               @click.native="toTopDetail(topplay.id)"
@@ -50,6 +50,8 @@
                 </swiper-slide>
             </swiper>
         </div>
+
+        <div class="space"></div>
         <router-view />
 
     </div>
@@ -165,10 +167,14 @@
     h3{
         box-sizing: border-box;
         width: 10rem;
-        padding-right: 1rem;
+        padding-right: 3.2rem;
         margin: 0;
-        margin-top: 3rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
 
+    }
+    .recent{
+        padding-right: 5rem;
     }
     .icon{
         float: right;
@@ -224,6 +230,10 @@
     .albumTitle{
         position: relative;
         top: 0.5rem;
+    }
+    .space{
+        width: 100%;
+        height: 30rem;
     }
 
 </style>
