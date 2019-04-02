@@ -33,7 +33,7 @@
             <swiper :options="swiperOption"  style="height:  26rem">
                 <swiper-slide v-for="topplay in result"
                               :data = "detailId"
-                              @click.native="toTopDetail(topplay.id)"
+                              @click.native="toTopDetail(topplay)"
                               >
                     <img :src="topplay.picUrl" class="topPlay">
                     <span class="topPlayTitle">{{topplay.name}}</span>
@@ -65,6 +65,7 @@
     import {getTopPlayList} from '../../api/topPlaylist.js'
     import {getAlbums} from '../../api/albums.js'
     import {ERR_OK} from '../../common/js/config'
+    import {mapMutations} from 'vuex'
 
 
     export default {
@@ -100,7 +101,7 @@
               detailId: Number
           }
         },
-        created () {
+       created () {
             this._getBanner()
             this._getTopPlayList()
             this._getAlbums()
@@ -127,12 +128,14 @@
                     }
                 })
             },
-            toTopDetail(Id) {
+            toTopDetail(item) {
                 // 跳转到专辑详情，这里使用编程式路由跳转
-                this.detailId = Id;
-                this.$router.push(`${this.$route.path + '/' + Id}`);
+                this.detailId = item.id;
+                this.$router.push(`${this.$route.path + '/' + item.id}`);
+                this.SET_TOP_LIST(item);
 
-            }
+            },
+            ...mapMutations(['SET_TOP_LIST']),
 
         },
         computed:{

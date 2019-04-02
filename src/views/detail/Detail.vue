@@ -1,67 +1,67 @@
 <template>
     <div calss="detail" id="detail">
         <header>
-            <div class="img" img>
-                <img :src="data.coverImgUrl" >
+            <div class="img" >
+                <img :src="get_topList.coverImgUrl" >
             </div>
             <div class="playname">
-                <span>{{data.name}}</span>
+                <span>{{get_topList.name}}</span>
             </div>
             <div class="description">
-                <span>{{data.description}}</span>
+                <span>{{get_topList.description}}</span>
             </div>
         </header>
         <div class="contain">
-            <ol>
-                <li v-for="song in songs">
-                    <img :src="song.al.picUrl">
-                    <div>{{song.name}}</div>
-                    <div>{{song.ar.name}}</div>
-                </li>
-            </ol>
+            <song-list :songs="songs"></song-list>
         </div>
     </div>
 </template>
 
 <script>
     import {getDetailTopPlayID} from '../../api/topPlaylist.js'
-    import {getDetailSongs} from '../../api/song.js'
+    import {getDetailSong} from '../../api/song.js'
     import {ERR_OK} from '../../common/js/config'
+    import SongList from '../../base/song-list'
+    import {mapGetters} from 'vuex'
+
     export default {
         data(){
             return{
                 Id: this.$route.params.detailId,
-                data: null,
                 track: String,
+                data: null,
                 songs: [],
-                song: null,
-                Ids: []
+                test: []
             }
         },
         created (){
                 this._getDetailTopPlayID(),
-                this._getDetailSongs()
+                    this.getListId()
         },
         methods:{
             _getDetailTopPlayID(){
                 const Id = this.Id
                 getDetailTopPlayID(Id).then(res =>{
                     if (res.status === ERR_OK) {
-                        this.data = res.data.playlist
+                        this.data = res.data.playlist;
                     }
+
                 })
             },
-            _getDetailSongs(){
-                for(var i = 0; i<this.this.data.trackIds.length; i++){
-                    getDetailSongs(this.data.trackIds[i].id).then(res =>{
-                        if (res.status === ERR_OK) {
-                            this.songs.push(res.data.songs)
-                        }
-                        this.$forceUpdate()
-                    })
+            getListId(){
+                this.test = this.get_topList.trackIds;
+                for(let item in this.test){
+                    this.songs.push(getDetailSong(item.id))
                 }
-
             }
+        },
+        computed:{
+            ...mapGetters([
+                'get_topList'
+            ])
+        },
+        components:{
+            SongList
         }
 
     }

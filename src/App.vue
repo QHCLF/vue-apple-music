@@ -1,8 +1,6 @@
 <template>
   <div id="app">
     <div id="nav">
-      <!--<router-link to="/">Home</router-link> |-->
-      <!--<router-link to="/about">About</router-link>-->
       <router-link to="/database"  class="tab"
                    index = 0
                    @click.native="changeTab(0)"
@@ -128,25 +126,4 @@
     font-size: 1.5rem;
     color: grey;
   }
-
-  .tab.active span{
-      color: indianred !important;
-}
-  .tab.active i{
-      color: indianred !important;
-  }
-
-    .musicPlayer{
-        width: 100%;
-        height: 4rem;
-        background-color: whitesmoke;
-        border-top-style: solid;
-        position: fixed;
-        z-index: 10000;
-        bottom: 4.15rem;
-        left: 0;
-    }
-    .musicPlayer i{
-        font-size: 1.5rem;
-    }
 </style>
